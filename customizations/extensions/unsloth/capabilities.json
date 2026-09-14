@@ -1,0 +1,194 @@
+{
+  "ISTA-DASLab/Qwen3.8-27B-GSQ-RCO-GGUF": {
+    "reasoning": true,
+    "levels": ["low", "medium", "xhigh"],
+    "alwaysOn": false,
+    "effort": true,
+    "preserveThinking": true,
+    "nativeContext": 262144
+  },
+  "unsloth/Qwen3.8-27B-GGUF": {
+    "reasoning": true,
+    "levels": ["low", "medium", "high", "xhigh"],
+    "alwaysOn": false,
+    "effort": true,
+    "preserveThinking": true,
+    "nativeContext": 262144
+  },
+  "incoai/Qwen3.8-27B-DFlash2-GGUF": {
+    "reasoning": true,
+    "levels": ["low", "medium", "xhigh"],
+    "alwaysOn": false,
+    "effort": true,
+    "preserveThinking": true,
+    "nativeContext": 262144
+  },
+  "bloomer010/Ling-3.0-tiny-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 131072
+  },
+  "HauhauCS/Qwen3.8-27B-Uncensored-HauhauCS-Aggressive-MTP-GGUF": {
+    "reasoning": true,
+    "levels": ["low", "medium", "xhigh"],
+    "alwaysOn": false,
+    "effort": true,
+    "preserveThinking": true,
+    "nativeContext": 262144
+  },
+  "lmstudio-community/Qwen3.8-27B-GGUF": {
+    "reasoning": true,
+    "levels": ["low", "medium", "xhigh"],
+    "alwaysOn": false,
+    "effort": true,
+    "preserveThinking": true,
+    "nativeContext": 262144
+  },
+  "lmstudio-community/Muse-Glimmer-30B-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": true,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 131072
+  },
+  "lmstudio-community/Bonsai-27B-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "HauhauCS/Qwen3.6-27B-Uncensored-HauhauCS-Aggressive": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "HauhauCS/Qwen3.6-35B-A3B-Uncensored-HauhauCS-Aggressive": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "lmstudio-community/gemma-4-E2B-it-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 131072
+  },
+  "Qwen/Qwen2.5-Coder-3B-Instruct-GGUF": {
+    "reasoning": false,
+    "levels": [],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 32768
+  },
+  "Qwen/Qwen2.5-Coder-1.5B-Instruct-GGUF": {
+    "reasoning": false,
+    "levels": [],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 32768
+  },
+  "lmstudio-community/Qwen3.5-9B-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "lmstudio-community/gemma-4-12B-it-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "lmstudio-community/gemma-4-12B-it-QAT-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "llmfan46/gemma-4-12B-it-qat-q4_0-uncensored-heretic-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "llmfan46/gemma-4-Ortenzya-The-Creative-Wordsmith-31B-it-uncensored-heretic-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "llmfan46/Qwen3.6-27B-uncensored-heretic-v2-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "llmfan46/Qwen3.6-35B-A3B-uncensored-heretic-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "lmstudio-community/Qwen3.6-27B-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "llmfan46/gemma-4-26B-A4B-it-ultra-uncensored-heretic-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "unsloth/gemma-4-26B-A4B-it-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  },
+  "unsloth/Qwen3.6-35B-A3B-GGUF": {
+    "reasoning": true,
+    "levels": ["high"],
+    "alwaysOn": false,
+    "effort": false,
+    "preserveThinking": false,
+    "nativeContext": 262144
+  }
+}
