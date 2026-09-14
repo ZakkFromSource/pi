@@ -50,7 +50,7 @@ Confirm the location and active branch with:
 git status
 ```
 
-The customization branch is `custom/pi-0.85.1`.
+The customization branch is `custom/pie`.
 
 ## Initial setup
 
@@ -152,7 +152,7 @@ pie
 ```
 
 The `pie` command always uses the branch currently checked out in this
-repository. Keep `custom/pi-0.85.1` checked out during normal use.
+repository. Keep `custom/pie` checked out during normal use.
 
 ## Unsloth extension link
 
@@ -191,7 +191,7 @@ or other secrets to the tracked extension files.
 git status
 ```
 
-Confirm that the active branch is `custom/pi-0.85.1`. Review or commit existing
+Confirm that the active branch is `custom/pie`. Review or commit existing
 changes before starting unrelated work.
 
 ### 2. Edit the relevant source
@@ -251,7 +251,7 @@ Avoid `git add .`; it may include unrelated files that were not reviewed.
 For the first push of the customization branch:
 
 ```bash
-git push -u origin custom/pi-0.85.1
+git push -u origin custom/pie
 ```
 
 For later commits:
@@ -323,7 +323,7 @@ Rebase changes commit identifiers. If the customization branch was previously
 pushed, update it with:
 
 ```bash
-git push --force-with-lease origin custom/pi-0.85.1
+git push --force-with-lease origin custom/pie
 ```
 
 `--force-with-lease` refuses to overwrite unexpected remote work and is safer
