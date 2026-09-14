@@ -106,7 +106,9 @@ function toPiModel(model: StudioModel): Model<"openai-completions"> {
     (value): value is number => typeof value === "number" && Number.isFinite(value) && value > 0,
   );
   const runningContext = model.context_length;
-  let contextWindow = Math.min(32768, ...nativeLimits);
+  // Before a model is loaded, use the most conservative verified native limit.
+  // Fall back to 32k only when neither Studio nor capabilities.json knows it.
+  let contextWindow = nativeLimits.length > 0 ? Math.min(...nativeLimits) : 32768;
   if (model.loaded && typeof runningContext === "number" && Number.isFinite(runningContext) && runningContext > 0) {
     contextWindow = runningContext;
   }

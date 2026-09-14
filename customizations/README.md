@@ -223,6 +223,12 @@ npm run check
 
 Run focused tests for the affected feature when available.
 
+Run the Unsloth provider regression test with:
+
+```bash
+node node_modules/vitest/dist/cli.js --config packages/coding-agent/vitest.config.ts --run customizations/extensions/unsloth/index.test.ts
+```
+
 ### 5. Commit the changes
 
 Stage each intended file explicitly:
@@ -392,6 +398,8 @@ and restored.
 
 - Footer context usage displays used tokens, percentage used, and total context
   capacity.
-- The Unsloth provider extension is maintained in the repository.
-- A focused regression test covers the customized footer output.
+- The Unsloth provider extension is maintained in the repository and advertises
+  verified native context limits before a model is loaded.
+- Focused regression tests cover the customized footer and Unsloth context
+  behavior.
 - Custom TypeScript includes beginner-oriented comments for non-obvious logic.
