@@ -10,6 +10,7 @@ source of truth for customized source code and extensions.
 | --- | --- |
 | `packages/` | Upstream Pi packages and customized application source |
 | `customizations/extensions/unsloth/` | Version-controlled Unsloth provider extension |
+| `customizations/goated-ai-skills/` | Pinned GOATED runtime skills, Pi adapter, and integration notes |
 | `pie` | Runs Pi from the currently checked-out repository source |
 | `pi` | Runs the globally installed npm release as a fallback |
 | `~/.pi/agent/` | Stores local settings, credentials, sessions, and extension links |
@@ -398,6 +399,9 @@ and restored.
 
 - Footer context usage displays used tokens, percentage used, and total context
   capacity.
+- The `pie` launcher loads the pinned GOATED skills and shared policy through
+  a native adapter. See [GOATED integration](goated-ai-skills/README.md) for
+  runtime scope, verification, and snapshot updates.
 - The Unsloth provider extension is maintained in the repository and advertises
   verified native context limits before a model is loaded.
 - Focused regression tests cover the customized footer and Unsloth context

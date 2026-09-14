@@ -1,0 +1,161 @@
+---
+name: writing-plans
+description: Use when an approved ticket, scoped task, spec slice, or implementation request needs a just-in-time executable plan before code, docs, or configuration changes.
+metadata:
+  goated-category: engineering
+---
+
+# Writing Plans
+
+## Purpose
+
+Turn approved work into an executable implementation plan immediately before implementation.
+
+Use this skill after intent is scoped enough to act, but before editing. The plan should be fresh, source-grounded, and useful to a new agent or engineer without hidden session history. It should name exact paths, commands, evidence, stop conditions, and closeout gates only after inspecting the current project.
+
+This skill keeps durable issues concise. Issues, PRDs, tickets, and roadmap notes should carry stable intent, acceptance criteria, blockers, and source links. Volatile details such as exact file paths, local commands, expected failures, implementation order, and verification evidence belong in a just-in-time plan.
+
+## Inputs
+
+- Approved ticket, spec slice, scoped user request, accepted architecture plan, prototype verdict, or review finding.
+- Target-project root path and current working-tree state when available.
+- Relevant project docs, local delivery tickets, standards, context artifacts, ADRs, source files, tests, schemas, commands, and previous verification evidence.
+- User constraints about plan location, tracked versus local artifacts, implementation route, risk tolerance, subagent use, or required closeout.
+- Known unavailable tools, skipped evidence, blockers, or decisions that must not be guessed.
+
+## Dependencies
+
+Hard: None.
+
+Soft:
+- session-start-progressive-disclosure for unfamiliar target projects
+- grill-with-docs when scope, artifact policy, success criteria, or tradeoffs are unclear
+- spec-to-tickets when a scoped spec still needs delivery tickets before planning
+- prototype when risky implementation choices need disposable evidence before exact steps
+- design-codebase-architecture when module, interface, dependency, or architecture strategy is unsettled
+- tdd when implementation changes behavior, public interfaces, regressions, or testable workflows
+- subagent-driven-development for larger, riskier, or parallelizable implementation when available
+- code-refinement after implementation only when explicitly requested or concrete refinement debt is observed
+- standards-and-spec-review after implementation when issue fit, acceptance coverage, or project standards need review
+- code-security-review after implementation when trust boundaries, auth, user data, persistence, execution, or unsafe config may be affected
+- doc-sync after behavior, interfaces, architecture, standards, configuration, tests, or docs may have changed
+- verification-before-completion before complete/ready plan, route, or closeout claims
+
+Fallback: If companion skills, docs, commands, subagents, or source evidence are unavailable, inspect minimal evidence, narrow the plan, mark assumptions/residual risk, and avoid unverifiable exact claims.
+
+## Workflow
+
+1. Confirm the planning target:
+   - Identify the exact ticket, spec slice, request, or approved artifact being converted into a plan.
+   - Confirm it is ready for implementation planning. If the work is not scoped, route to `grill-with-docs`, `write-a-spec`, `spec-to-tickets`, `prototype`, or `design-codebase-architecture` instead of writing an assumption-heavy plan.
+   - Check that the target is small enough to implement as one focused vertical slice. If it is broad, narrow the plan to the first user-verifiable tracer bullet and defer the rest, or route back to `spec-to-tickets`.
+   - Separate durable requirements from volatile execution details.
+
+2. Choose the plan mode:
+   - Use **inline** for focused, single-session work. Hold the ordered steps in the work envelope or conversation without creating a tracked artifact.
+   - Use **durable** for resumable, delegated, architectural, or multi-surface work. Write a tracked plan using the target project's existing convention; if no convention exists, choose a clear project-local plans or architecture path and state it before writing.
+   - Existing project conventions and explicit user artifact instructions win.
+   - Do not hide the only resumable implementation context in ignored local state.
+   - If an inline plan grows into durable work, promote it in place: reuse fresh discovery and evidence, preserve settled decisions and executable steps, add only the durability context now needed, and do not restart discovery.
+
+3. Inspect before writing exact steps:
+   - Read the originating artifact and the smallest useful current source, test, docs, config, or schema evidence.
+   - Discover likely edit paths, public interfaces, test surfaces, commands, and documentation surfaces from the project itself.
+   - Do not write exact file paths, commands, snippets, expected failures, expected outputs, or review claims before this inspection.
+   - If multiple plausible paths remain after inspection and the choice changes behavior or risk, ask the user or narrow the plan to the verified path.
+
+4. Pick the execution route:
+   - Use **direct execution** for tiny, low-risk, docs-only, mechanical, or obvious changes.
+   - Use **`tdd`** for behavior changes, bug fixes, regressions, public interfaces, module seams, or any implementation that should be proven by tests.
+   - Use **`subagent-driven-development`** for larger, risky, review-heavy, or parallelizable work when that skill and subagents are available.
+   - If `subagent-driven-development` is unavailable, keep the plan single-agent-compatible and split work into sequential checkpoints with review gates.
+
+5. Write executable steps:
+   - Name exact files or source areas to inspect or edit, and why each matters.
+   - When behavior is involved, start with the smallest end-to-end behavior path that can be proved through a public interface.
+   - Avoid layer-by-layer batches such as schema-only, API-only, UI-only, or tests-only work unless they are narrow foundations with a named dependent slice and concrete verification.
+   - When module shape matters, name the deep module, public interface, seam, or test surface the plan is preserving or improving.
+   - Name the command or manual check for each meaningful proof step, plus the evidence expected from it.
+   - For TDD work, include red, green, refactor, and rerun checkpoints rather than a single bulk test phase.
+   - Include conditional closeout steps: `code-refinement` only for an explicit cleanup request or observed debt, standards/spec review and security review when relevant, documentation sync, and final verification.
+   - Do not include issue closure, archive moves, completion status edits, or similar lifecycle cleanup unless the plan first satisfies verification and any required review gate for that action.
+   - Include stop conditions for missing source evidence, unexpected test results, broad scope drift, unsafe commands, unclear product choices, or repeated verification failures.
+   - Keep steps ordered so each one produces evidence needed by the next.
+   - End with one justified next-step signal, such as direct execution, `tdd`, or `subagent-driven-development`; do not rebuild the remaining delivery pipeline.
+
+6. Review the plan before execution:
+   - Read [Plan Review Checklist](references/plan-review-checklist.md) for non-trivial, risky, delegated, resumable, or durable plans.
+   - Check that every acceptance criterion has a planned proof path.
+   - Remove placeholders, vague verbs, stale assumptions, and broad "do the rest" language.
+   - Make the plan no more detailed than the work needs. Tiny tasks can use a short inline checklist.
+
+7. Execute or hand off:
+   - If the user asked for implementation and the plan is ready, proceed through the chosen route.
+   - If the user asked only for a plan, stop after the plan and state assumptions, skipped inspection, and residual risk.
+   - If another agent or future session will execute it, include enough source links, current-state evidence, commands, and stop conditions to avoid depending on hidden chat history.
+
+## Output Contract
+
+For most work, return a compact plan shaped like this:
+
+```markdown
+## Implementation Plan
+
+- Plan target: <ticket, spec slice, or request>
+- Plan mode and location: <inline in envelope/conversation | durable tracked path>
+- Source inspected: <paths, commands, docs, tests, schemas, and skipped evidence if any>
+- Execution route: <direct execution | tdd | subagent-driven-development | sequential fallback>
+- Slice shape: <smallest vertical behavior path | narrow foundation with rationale | not vertical because...>
+- Module/interface focus: <public interface, deep module, seam, test surface, or "not architecture-relevant">
+- Assumptions: <verified assumptions or "None">
+- Stop conditions: <conditions that should pause execution>
+
+### Steps
+
+1. <Inspect/edit/run step with exact path or command and expected evidence>
+2. <Next step>
+3. <Review/doc-sync/verification closeout step>
+
+### Residual Risk
+
+- <skipped evidence, unavailable commands, unclear product choices, or "Low">
+```
+
+For tiny tasks, a shorter inline checklist is acceptable if it still names the target, route, evidence, and closeout.
+
+For durable plan files, include the same sections in the file and summarize the plan location, route, assumptions, and next-step signal in chat.
+
+## Delegation
+
+Main owns the target, artifact policy, route, final plan, and communication.
+Delegate only bounded path/test/command discovery, acceptance coverage,
+placeholder and safety review, closeout-surface discovery, or route
+stress-testing.
+
+Return inspected and skipped evidence, assumptions, risk, confidence, status,
+and recommended changes—not final publication. Resolve concerns or missing
+context before execution; narrow, clarify, or stop on `BLOCKED`. Without
+delegation, review sequentially.
+
+## Guardrails
+
+- Do not write exact file paths, commands, snippets, expected outputs, or expected failures before current source inspection.
+- Do not turn durable issues into stale implementation transcripts. Keep stable intent in issues and volatile execution detail in just-in-time plans.
+- Do not create a durable tracked plan for focused single-session work without evidence that persistence is useful.
+- Do not store the only resumable, delegated, architectural, or multi-surface plan in ignored local state.
+- Do not restart discovery during inline-to-durable promotion while the existing evidence remains fresh and sufficient.
+- Do not emit a complete downstream pipeline; emit only the next justified action or skill.
+- Do not turn a broad ticket or spec slice into a broad implementation plan. Narrow to the first user-verifiable vertical slice or route back to ticket slicing.
+- Do not plan horizontal layer batches, broad setup, speculative scaffolding, or multi-behavior milestones unless a narrow foundation is required, named, and verifiable.
+- Do not create shallow pass-through abstractions when a deeper module, smaller public interface, or clearer test surface would keep behavior local.
+- Do not use placeholders such as `TODO`, "handle edge cases", "write tests", "etc.", "similar to above", or "finish implementation" as executable steps.
+- Do not skip TDD planning for behavior changes just because the edit looks small.
+- Do not route to subagents in a way that makes the main agent lose ownership of integration, review, or final claims.
+- Do not prescribe branch, worktree, commit, PR, issue tracker, or agent-tool mechanics unless the target project or user request provides them.
+- Do not plan to close, archive, move, rename, or mark an issue complete as routine cleanup before acceptance evidence and any required review are verified.
+- Do not include private notes, credentials, client data, sensitive personal context, ignored scratch content, or real user data in tracked plans.
+- Do not require this source repo's root files, issue files, `.local/` research, or chat history after installation. The skill may rely only on its own files and target-project evidence.
+
+## References
+
+Linked support file, read at the workflow gate above: [Plan Review Checklist](references/plan-review-checklist.md).
