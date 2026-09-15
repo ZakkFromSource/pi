@@ -172,6 +172,68 @@ describe("GOATED native Pi integration", () => {
 });
 
 describe("pie launcher", () => {
+	it.each([false, true])("uses the selected runtime and forwards arguments with --no-env=%s", (noEnv) => {
+		const projectRoot = mkdtempSync(join(tmpdir(), "pi launcher runtime "));
+		try {
+			const runtimePath = join(projectRoot, "selected node");
+			writeFileSync(
+				runtimePath,
+				[
+					"#!/usr/bin/env bash",
+					'printf \'%s\\n\' "$@"',
+					'printf \'TEST_KEY=%s\\n\' "${OPENAI_API_KEY-unset}"',
+					"exit 17",
+					"",
+				].join("\n"),
+				{ mode: 0o755 },
+			);
+			const cliArgs = ["auth", "--help", "message with spaces", 'a"quoted"value'];
+			const result = spawnSync(
+				getShellConfig().shell,
+				[join(repositoryRoot, "pi-test.sh"), ...(noEnv ? ["--no-env"] : []), ...cliArgs],
+				{
+					cwd: projectRoot,
+					env: {
+						PATH: process.env.PATH,
+						SystemRoot: process.env.SystemRoot,
+						WINDIR: process.env.WINDIR,
+						TEMP: projectRoot,
+						TMP: projectRoot,
+						HOME: projectRoot,
+						USERPROFILE: projectRoot,
+						APPDATA: join(projectRoot, "appdata"),
+						LOCALAPPDATA: join(projectRoot, "localappdata"),
+						[ENV_AGENT_DIR]: join(projectRoot, "agent"),
+						PI_OFFLINE: "1",
+						PI_TELEMETRY: "0",
+						PIE_NODE: runtimePath.replaceAll("\\", "/"),
+						// A synthetic value checks --no-env without inheriting any real credentials.
+						OPENAI_API_KEY: "launcher-test-placeholder",
+					},
+					encoding: "utf8",
+					timeout: 20_000,
+					windowsHide: true,
+				},
+			);
+
+			expect(result.error).toBeUndefined();
+			expect(result.status, result.stderr).toBe(17);
+			const lines = result.stdout.trim().split(/\r?\n/);
+			if (noEnv) expect(lines.shift()).toBe("Running without API keys...");
+			const [tsxPath, tsconfigFlag, tsconfigPath, cliPath, ...forwardedArgs] = lines;
+			expect(tsxPath).toMatch(/\/node_modules\/tsx\/dist\/cli\.mjs$/);
+			expect(tsconfigFlag).toBe("--tsconfig");
+			expect(tsconfigPath).toMatch(/\/tsconfig\.json$/);
+			expect(cliPath).toMatch(/\/customizations\/goated-ai-skills\/cli\.ts$/);
+			expect(forwardedArgs).toEqual([
+				...cliArgs,
+				`TEST_KEY=${noEnv ? "unset" : "launcher-test-placeholder"}`,
+			]);
+		} finally {
+			rmSync(projectRoot, { recursive: true, force: true });
+		}
+	});
+
 	it("preserves auth subcommand dispatch when launched from another project", () => {
 		const projectRoot = mkdtempSync(join(tmpdir(), "pi-goated-launcher-"));
 		try {

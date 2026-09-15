@@ -54,7 +54,9 @@ if [[ "$NO_ENV" == "true" ]]; then
   echo "Running without API keys..."
 fi
 
-"$SCRIPT_DIR/node_modules/.bin/tsx" \
+# Allow machine-local pie launchers to select a tested Node runtime. Starting
+# tsx through that executable also keeps its child process on the same runtime.
+"${PIE_NODE:-node}" "$SCRIPT_DIR/node_modules/tsx/dist/cli.mjs" \
   --tsconfig "$SCRIPT_DIR/tsconfig.json" \
   "$SCRIPT_DIR/customizations/goated-ai-skills/cli.ts" \
   ${ARGS[@]+"${ARGS[@]}"}
