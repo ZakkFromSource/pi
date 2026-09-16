@@ -10,6 +10,8 @@ source of truth for customized source code and extensions.
 | --- | --- |
 | `packages/` | Upstream Pi packages and customized application source |
 | `customizations/extensions/unsloth/` | Version-controlled Unsloth provider extension |
+| `customizations/extensions/herdr-pie/` | Reports source-launched `pie` sessions as a custom Herdr agent |
+| `customizations/herdr/` | Configures Git Bash panes and cwd-aware bare Herdr launches |
 | `customizations/goated-ai-skills/` | Pinned GOATED runtime skills, Pi adapter, and integration notes |
 | `pie` | Runs Pi from the currently checked-out repository source |
 | `pi` | Runs the globally installed npm release as a fallback |
@@ -137,7 +139,10 @@ Both launchers currently target:
 P:\Project Files\Programming\pi fork\pi-test.sh
 ```
 
-The launchers contain an absolute path and are not committed to the repository.
+They set `PIE_CUSTOM=1` so the tracked
+[Herdr `pie` integration](extensions/herdr-pie/README.md) activates only for
+this source launcher. The launchers contain an absolute path and are not
+committed to the repository.
 They must be updated if the repository is moved or renamed.
 
 They also select a dedicated Node 22.23.2 LTS runtime through `PIE_NODE` to
@@ -161,6 +166,47 @@ pie
 
 The `pie` command always uses the branch currently checked out in this
 repository. Keep `custom/pie` checked out during normal use.
+
+## Herdr `pie` agent integration
+
+Herdr recognizes stock Pi on Windows from exact official package entrypoints.
+The `pie` launcher instead runs this checkout's TypeScript entrypoint through
+`tsx`, so Herdr cannot classify it as the built-in `pi` process. The tracked
+extension at `customizations/extensions/herdr-pie` reports it through Herdr's
+custom-agent interface as `pie`.
+
+The live global extension path is a Windows directory junction:
+
+```text
+~/.pi/agent/extensions/herdr-pie
+  -> customizations/extensions/herdr-pie
+```
+
+The extension requires both `PIE_CUSTOM=1` from the machine-local launcher and
+Herdr's inherited pane variables. Stock `pi` sessions therefore continue using
+Herdr's managed `pi` integration without being claimed as `pie`.
+
+From another Herdr pane, verify a newly started `pie` process with:
+
+```bash
+herdr agent list
+```
+
+It should appear as `pie` with `idle`, `working`, or `blocked` state. Exit it
+with `Ctrl+D` and confirm it leaves the list. See the
+[integration guide](extensions/herdr-pie/README.md) for installation,
+troubleshooting, focused tests, and rollback.
+
+## Herdr Git Bash shell and open-here behavior
+
+The user-level Herdr configuration selects non-login Git Bash for newly created
+panes. A tracked wrapper installed at `~/bin/herdr` makes bare `herdr` calls
+from Git Bash create and focus a workspace at the invoking directory before
+attaching to the persistent session. Explicit Herdr commands and calls from
+inside a managed pane remain side-effect free.
+
+See [Herdr Git Bash setup](herdr/README.md) for the diagnosis, configuration,
+wrapper installation, focused test, live verification, and rollback procedure.
 
 ## Unsloth extension link
 
@@ -562,6 +608,10 @@ and restored.
 - The `pie` launcher loads the pinned GOATED skills and shared policy through
   a native adapter. See [GOATED integration](goated-ai-skills/README.md) for
   runtime scope, verification, and snapshot updates.
+- Source-launched `pie` sessions report lifecycle state to Herdr as the custom
+  `pie` agent without changing stock `pi` detection.
+- New Herdr panes use Git Bash, and bare Git Bash launches open a focused Herdr
+  workspace at the invoking directory.
 - The Unsloth provider extension is maintained in the repository and advertises
   verified native context limits before a model is loaded.
 - Focused regression tests cover the customized footer and Unsloth context

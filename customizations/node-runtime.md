@@ -13,7 +13,9 @@ The Windows `pie` launchers select a dedicated **Node 22.23.2 LTS** executable:
 `PIE_NODE` is absent, the source runner uses `node` from `PATH`.
 
 Both `%APPDATA%\npm\pie.cmd` and `%APPDATA%\npm\pie` set the dedicated runtime
-as their default while honoring an explicit `PIE_NODE` override. This takes
+as their default while honoring an explicit `PIE_NODE` override. They also set
+`PIE_CUSTOM=1` to activate the tracked
+[Herdr `pie` integration](extensions/herdr-pie/README.md). These changes take
 effect in newly started `pie` processes. The system Node installation and the
 globally installed `pi` launcher retain their existing configuration.
 
@@ -153,6 +155,7 @@ procedure with local paths to adjust.
 
    ```bat
    if not defined PIE_NODE set "PIE_NODE=%USERPROFILE:\=/%/.pi/pie/runtimes/node-v22.23.2-win-x64/node.exe"
+   set "PIE_CUSTOM=1"
    ```
 
 4. In the extensionless `pie` shell script, add this before its existing `exec`
@@ -161,9 +164,12 @@ procedure with local paths to adjust.
    ```sh
    : "${PIE_NODE:=C:/Users/YOUR_USER/.pi/pie/runtimes/node-v22.23.2-win-x64/node.exe}"
    export PIE_NODE
+   export PIE_CUSTOM=1
    ```
 
-5. Run the reproduction and checks above, then start a fresh `pie` process.
+5. Install the tracked Herdr extension using the directory junction procedure
+   in the [integration guide](extensions/herdr-pie/README.md).
+6. Run the reproduction and checks above, then start a fresh `pie` process.
    Use `pie -c` to continue the most recent saved session in the current project,
    or `pie -r` to select a saved session.
 
@@ -173,5 +179,6 @@ selection, restore those two files to `%APPDATA%\npm`. The separate
 `20260915-124441` backup contains the superseded AppData launchers; restoring
 those would reintroduce the terminal visibility problem. An explicit `PIE_NODE`
 override can select another tested executable without editing the launchers.
-Review future supported Node releases and repeat the reproduction before
-updating this pin.
+When running inside Herdr, confirm the fresh session appears as `pie` with
+`herdr agent list` and disappears after a graceful `Ctrl+D` exit. Review future
+supported Node releases and repeat the reproduction before updating this pin.

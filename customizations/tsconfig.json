@@ -1,0 +1,4 @@
+{
+	"extends": "../tsconfig.json",
+	"include": ["./extensions/herdr-pie/*.ts", "../packages/*/src/**/*.d.ts"]
+}

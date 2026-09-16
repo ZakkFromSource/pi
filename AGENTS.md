@@ -21,6 +21,7 @@
 - **No inline imports** (`await import()`, `import("pkg").Type`, dynamic type imports). Top-level imports only.
 - Never remove or downgrade code to fix type errors from outdated deps; upgrade the dep instead.
 - Use only erasable TypeScript syntax (Node strip-only mode) in code checked by the root config (`packages/*/src`, `packages/*/test`, `packages/coding-agent/examples`): no parameter properties, `enum`, `namespace`/`module`, `import =`, `export =`, or other constructs needing JS emit. Use explicit fields with constructor assignments.
+- TypeScript under `customizations/` that needs editor type checking must be included by the discoverable ancestor `customizations/tsconfig.json`. Do not place `tsconfig.json` inside an extension directory linked into `~/.pi/agent/extensions`; Pi resolves that config through the link path and relative `extends` entries break extension startup.
 - Always ask before removing functionality or code that appears intentional.
 - Do not preserve backward compatibility unless the user asks for it.
 - Never hardcode key checks (e.g. `matchesKey(keyData, "ctrl+x")`). Add defaults to `DEFAULT_EDITOR_KEYBINDINGS` or `DEFAULT_APP_KEYBINDINGS` so they stay configurable.
