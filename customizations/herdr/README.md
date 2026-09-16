@@ -4,6 +4,11 @@ This setup makes Git Bash the default shell for new Herdr panes on Windows and
 makes a bare `herdr` command launched from Git Bash open a focused workspace at
 the invoking directory.
 
+For a complete new-machine procedure, including `pie` launchers and the custom
+agent extension, start with the
+[Windows `pie` and Herdr setup guide](../windows-setup.md). This document owns
+the component-specific behavior and troubleshooting details.
+
 ## Why both changes are required
 
 Herdr is a persistent terminal server. Running bare `herdr` while its server is

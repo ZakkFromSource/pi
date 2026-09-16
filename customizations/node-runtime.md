@@ -136,8 +136,9 @@ record is `installation.json` beside the dedicated `node.exe`.
 
 Scope: the current Windows x64 user and this source checkout. The download,
 checksum, runtime installation, launcher backups, launcher changes, and checks
-were verified here. Recreating them on another workstation remains a manual
-procedure with local paths to adjust.
+were verified here. For a new workstation, use this runtime procedure together
+with the complete [Windows `pie` and Herdr setup guide](windows-setup.md), which
+contains full launcher templates with portable placeholders.
 
 1. Download the [official Node 22.23.2 Windows x64 executable](https://nodejs.org/dist/v22.23.2/win-x64/node.exe)
    to a temporary file. Verify its SHA-256 against the `win-x64/node.exe` entry
@@ -159,16 +160,16 @@ procedure with local paths to adjust.
    ```
 
 4. In the extensionless `pie` shell script, add this before its existing `exec`
-   command, substituting the actual absolute path and using forward slashes:
+   command:
 
    ```sh
-   : "${PIE_NODE:=C:/Users/YOUR_USER/.pi/pie/runtimes/node-v22.23.2-win-x64/node.exe}"
+   : "${PIE_NODE:=$HOME/.pi/pie/runtimes/node-v22.23.2-win-x64/node.exe}"
    export PIE_NODE
    export PIE_CUSTOM=1
    ```
 
 5. Install the tracked Herdr extension using the directory junction procedure
-   in the [integration guide](extensions/herdr-pie/README.md).
+   in the [Windows setup guide](windows-setup.md#4-link-the-tracked-herdr-extension).
 6. Run the reproduction and checks above, then start a fresh `pie` process.
    Use `pie -c` to continue the most recent saved session in the current project,
    or `pie -r` to select a saved session.

@@ -12,6 +12,7 @@ source of truth for customized source code and extensions.
 | `customizations/extensions/unsloth/` | Version-controlled Unsloth provider extension |
 | `customizations/extensions/herdr-pie/` | Reports source-launched `pie` sessions as a custom Herdr agent |
 | `customizations/herdr/` | Configures Git Bash panes and cwd-aware bare Herdr launches |
+| `customizations/windows-setup.md` | Recreates the source launcher and Herdr integration on another Windows machine |
 | `customizations/goated-ai-skills/` | Pinned GOATED runtime skills, Pi adapter, and integration notes |
 | `pie` | Runs Pi from the currently checked-out repository source |
 | `pi` | Runs the globally installed npm release as a fallback |
@@ -29,22 +30,19 @@ outside version control.
 
 ## Working from the repository root
 
-Unless stated otherwise, run all project commands from the repository root:
-
-```text
-P:\Project Files\Programming\pi fork
-```
+Unless stated otherwise, run all project commands from the repository root.
+Replace these example paths with the clone's actual location.
 
 Navigate there from PowerShell with:
 
 ```powershell
-Set-Location -LiteralPath 'P:\Project Files\Programming\pi fork'
+Set-Location -LiteralPath 'C:\path\to\pi'
 ```
 
 Navigate there from Git Bash with:
 
 ```bash
-cd '/p/Project Files/Programming/pi fork'
+cd '/c/path/to/pi'
 ```
 
 Confirm the location and active branch with:
@@ -56,6 +54,11 @@ git status
 The customization branch is `custom/pie`.
 
 ## Initial setup
+
+For a new Windows workstation, follow the complete
+[Windows `pie` and Herdr setup guide](windows-setup.md). It contains the full
+machine-local launcher templates, extension junction, Herdr configuration,
+verification, privacy boundaries, and rollback procedure.
 
 ### Install dependencies
 
@@ -133,10 +136,10 @@ The workstation uses two machine-local launchers:
 | `%APPDATA%\npm\pie.cmd` | PowerShell and Command Prompt |
 | `%APPDATA%\npm\pie` | Git Bash |
 
-Both launchers currently target:
+Both launchers target the checked-out clone's source runner:
 
 ```text
-P:\Project Files\Programming\pi fork\pi-test.sh
+<clone>\pi-test.sh
 ```
 
 They set `PIE_CUSTOM=1` so the tracked
@@ -576,7 +579,7 @@ pie --version
 The expected launcher path is:
 
 ```text
-/c/Users/ZakkFromSource/AppData/Roaming/npm/pie
+/c/Users/YOUR_USER/AppData/Roaming/npm/pie
 ```
 
 Git Bash requires the extensionless `pie` launcher. PowerShell and Command
@@ -593,7 +596,7 @@ Confirm that the customization branch is checked out and that this directory
 exists:
 
 ```text
-P:\Project Files\Programming\pi fork\customizations\extensions\unsloth
+<clone>\customizations\extensions\unsloth
 ```
 
 If the directory exists, inspect the junction at

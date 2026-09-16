@@ -31,31 +31,15 @@ The guard prevents globally installed stock `pi` sessions from being claimed as
 
 ## Windows installation
 
-The tracked extension remains in this repository. Pi discovers it through a
-user-scoped directory junction:
+Follow the repository's complete
+[Windows `pie` and Herdr setup guide](../../windows-setup.md). It provides the
+full launcher templates, guarded directory-junction procedure, Herdr terminal
+configuration, verification, and rollback steps using portable placeholders.
 
-```powershell
-$repo = 'P:\Project Files\Programming\pi fork'
-$extensionPath = Join-Path $env:USERPROFILE '.pi\agent\extensions\herdr-pie'
-New-Item -ItemType Junction `
-  -Path $extensionPath `
-  -Target (Join-Path $repo 'customizations\extensions\herdr-pie')
-```
-
-Both machine-local launchers must set the guard before starting Pi:
-
-```bat
-rem %APPDATA%\npm\pie.cmd
-set "PIE_CUSTOM=1"
-```
-
-```sh
-# %APPDATA%/npm/pie
-export PIE_CUSTOM=1
-```
-
-Back up both launchers before editing them. The launchers are machine-local and
-are not tracked by Git.
+The tracked extension remains in this repository and Pi discovers it through a
+user-scoped directory junction. Both machine-local launchers must export
+`PIE_CUSTOM=1` before starting Pi. The launchers remain outside Git because
+they contain the clone's absolute path.
 
 ## Verification
 
